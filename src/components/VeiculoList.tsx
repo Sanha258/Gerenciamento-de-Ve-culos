@@ -1,5 +1,4 @@
-// VeiculoList.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import './VeiculoList.css';
 import type { Veiculo } from '../types/Veiculo';
 
@@ -10,6 +9,21 @@ interface VeiculoListProps {
 }
 
 const VeiculoList: React.FC<VeiculoListProps> = ({ veiculos, onEdit, onDelete }) => {
+  const [showConfirm, setShowConfirm] = useState<number | null>(null);
+
+  const handleDeleteClick = (id: number) => {
+    setShowConfirm(id);
+  };
+
+  const confirmDelete = (id: number) => {
+    onDelete(id);
+    setShowConfirm(null);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirm(null);
+  };
+
   return (
     <div className="veiculo-list-container">
       <div className="veiculo-list-header">
@@ -34,9 +48,26 @@ const VeiculoList: React.FC<VeiculoListProps> = ({ veiculos, onEdit, onDelete })
               <button className="edit-btn" onClick={() => onEdit(veiculo)}>
                 <span className="icon">✏️</span> Editar
               </button>
-              <button className="delete-btn" onClick={() => veiculo.id && onDelete(veiculo.id)}>
+              <button className="delete-btn" onClick={() => veiculo.id && handleDeleteClick(veiculo.id)}>
                 <span className="icon">🗑️</span> Remover
               </button>
+
+              {/* Diálogo de confirmação */}
+              {showConfirm === veiculo.id && (
+                <div className="confirm-dialog">
+                  <div className="confirm-content">
+                    <p>Tem certeza que deseja remover este veículo?</p>
+                    <div className="confirm-buttons">
+                      <button className="confirm-btn confirm-yes" onClick={() => confirmDelete(veiculo.id!)}>
+                        Sim
+                      </button>
+                      <button className="confirm-btn confirm-no" onClick={cancelDelete}>
+                        Não
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}

@@ -17,11 +17,11 @@
   background-color: #0a2540;
   color: white;
   display: grid;
-  grid-template-columns: 60px repeat(5, 1fr) 210px;/*grid-template-columns: 60px repeat(5, 1fr) 170px;  Reduzido para 170px */
-  padding: 1rem 1.5rem; /* Reduzido o padding */
+  grid-template-columns: 60px repeat(5, 1fr) 210px;
+  padding: 1rem 1.5rem; 
   align-items: center;
-  gap: 1rem; /* Espaçamento reduzido */
-  font-size: 0.9rem; /* Fonte ligeiramente menor */
+  gap: 1rem; 
+  font-size: 0.9rem; 
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -38,10 +38,10 @@
 
 .veiculo-row {
   display: grid;
-  grid-template-columns: 60px repeat(5, 1fr) 210px;/*grid-template-columns: 60px repeat(5, 1fr) 170px;  Reduzido para 170px */
-  padding: 0.8rem 1.5rem; /* Padding reduzido */
+  grid-template-columns: 60px repeat(5, 1fr) 210px;
+  padding: 0.8rem 1.5rem; 
   align-items: center;
-  gap: 1rem; /* Espaçamento reduzido */
+  gap: 1rem; 
   border-bottom: 1px solid #f0f0f0;
   transition: background-color 0.2s ease;
 }
@@ -53,7 +53,7 @@
 .row-cell {
   padding: 0.4rem 0;
   text-align: center;
-  font-size: 0.9rem; /* Fonte ligeiramente menor */
+  font-size: 0.9rem; 
   color: #333;
   white-space: nowrap;
   overflow: hidden;
@@ -63,19 +63,19 @@
 .actions {
   display: flex;
   justify-content: center;
-  gap: 0.6rem; /* Espaçamento reduzido entre botões */
-  min-width: 210px;/*min-width: 170px;  Ajustado para 170px */
+  gap: 0.6rem; 
+  min-width: 210px;
 }
 
 .edit-btn, .delete-btn {
-  padding: 0.5rem 0.8rem; /* Tamanho reduzido */
+  padding: 0.5rem 0.8rem; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.3rem; /* Espaçamento reduzido */
-  font-size: 0.82rem; /* Fonte menor */
+  gap: 0.3rem; 
+  font-size: 0.82rem; 
   font-weight: 500;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -105,12 +105,12 @@
 }
 
 .icon {
-  font-size: 0.85rem; /* Ícone ligeiramente menor */
+  font-size: 0.85rem; 
 }
 
-/* Estilização personalizada da scrollbar */
+
 .veiculo-list-body::-webkit-scrollbar {
-  width: 6px; /* Scrollbar mais fina */
+  width: 6px; 
 }
 
 .veiculo-list-body::-webkit-scrollbar-track {
@@ -125,4 +125,81 @@
 
 .veiculo-list-body::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+
+.confirm-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirm-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.confirm-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.confirm-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.confirm-yes {
+  background-color: #ff5e5e;
+  color: white;
+}
+
+.confirm-yes:hover {
+  background-color: #ff4444;
+  transform: translateY(-1px);
+}
+
+.confirm-no {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirm-no:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.delete-btn {
+  position: relative;
+  z-index: 1;
 }
