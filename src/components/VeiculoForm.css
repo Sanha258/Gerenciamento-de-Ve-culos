@@ -1,13 +1,28 @@
 /* VeiculoForm.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
 .veiculo-form-container {
-  width: 100%;
+  position: relative;
+  z-index: 1001;
+  width: 90%;
   max-width: 800px;
   margin: 0 auto;
   padding: 0;
   background-color: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .veiculo-form-header {
@@ -50,7 +65,6 @@
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.3s ease;
   outline: none;
 }
 
@@ -76,7 +90,6 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .cancel-btn:hover {
@@ -93,12 +106,10 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .submit-btn:hover {
   background: #14385c;
-  transform: translateY(-1px);
 }
 
 /* Estilos responsivos */
@@ -122,32 +133,4 @@
     width: 100%;
     padding: 0.85rem;
   }
-}
-
-/* Adicione no final do VeiculoForm.css */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease;
-}
-
-.veiculo-form-container {
-  position: relative;
-  z-index: 1001;
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }

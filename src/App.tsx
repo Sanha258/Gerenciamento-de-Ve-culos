@@ -103,15 +103,12 @@ function App() {
         />
         
         {showForm && (
-          <div className="modal-overlay">
-            
-              <VeiculoForm 
-                veiculo={editingVeiculo || undefined}
-                onSubmit={handleFormSubmit}
-                onCancel={() => setShowForm(false)}
-              />
-            
-          </div>
+          <VeiculoForm 
+            veiculo={editingVeiculo || undefined}
+            onSubmit={handleFormSubmit}
+            onCancel={() => setShowForm(false)}
+            isOpen={showForm}
+          />
         )}
       </main>
     </div>

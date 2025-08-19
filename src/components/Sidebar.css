@@ -55,17 +55,6 @@
 .cadastrar-btn:hover {
   background-color: #45a049;
 }
-
-.sair-btn {
-  background-color: transparent;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.sair-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 .icon {
   font-weight: bold;
 }

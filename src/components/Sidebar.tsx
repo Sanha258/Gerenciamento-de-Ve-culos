@@ -7,7 +7,7 @@ interface SidebarProps {
   onSairClick: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onCadastrarClick, onSairClick }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onCadastrarClick }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
@@ -16,11 +16,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onCadastrarClick, onSairClick }) => {
       <div className="sidebar-content">
         <button className="sidebar-btn cadastrar-btn" onClick={onCadastrarClick}>
           <span className="icon">+</span> Cadastrar
-        </button>
-      </div>
-      <div className="sidebar-footer">
-        <button className="sidebar-btn sair-btn" onClick={onSairClick}>
-          <span className="icon">→</span> Sair
         </button>
       </div>
     </div>

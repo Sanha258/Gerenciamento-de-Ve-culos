@@ -32,7 +32,6 @@ const VeiculoList: React.FC<VeiculoListProps> = ({ veiculos, onEdit, onDelete })
         <div className="header-cell">Modelo</div>
         <div className="header-cell">Ano</div>
         <div className="header-cell">Placa</div>
-        <div className="header-cell">Cor</div>
         <div className="header-cell">Ações</div>
       </div>
       <div className="veiculo-list-body">
@@ -43,7 +42,6 @@ const VeiculoList: React.FC<VeiculoListProps> = ({ veiculos, onEdit, onDelete })
             <div className="row-cell" data-label="Modelo">{veiculo.modelo}</div>
             <div className="row-cell" data-label="Ano">{veiculo.ano}</div>
             <div className="row-cell" data-label="Placa">{veiculo.placa}</div>
-            <div className="row-cell" data-label="Cor">{veiculo.cor}</div>
             <div className="row-cell actions">
               <button className="edit-btn" onClick={() => onEdit(veiculo)}>
                 <span className="icon">✏️</span> Editar

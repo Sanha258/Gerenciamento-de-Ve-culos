@@ -4,5 +4,5 @@ export interface Veiculo {
   marca: string;
   ano: number;
   placa: string;
-  cor: string;
+ 
 }
