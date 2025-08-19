@@ -1,0 +1,125 @@
+/* VeiculoForm.css */
+.veiculo-form-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.veiculo-form-header {
+  background-color: #0a2540;
+  color: white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.veiculo-form-title {
+  color: white;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.veiculo-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 0 1.5rem 1.5rem;
+  overflow: hidden;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #0a2540;
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  padding: 0.85rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #0a2540;
+  box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.1);
+}
+
+.form-actions {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.cancel-btn {
+  background: #f5f7fa;
+  color: #0a2540;
+  border: 2px solid #e0e0e0;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: #e0e6ed;
+  border-color: #c2cfde;
+}
+
+.submit-btn {
+  background: #0a2540;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #14385c;
+  transform: translateY(-1px);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .veiculo-form {
+    grid-template-columns: 1fr;
+    padding: 0 1rem 1rem;
+  }
+  
+  .veiculo-form-header {
+    padding: 1.2rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
+    padding: 0.85rem;
+  }
+}

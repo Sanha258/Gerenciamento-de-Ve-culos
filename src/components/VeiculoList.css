@@ -1,0 +1,128 @@
+.veiculo-list-container {
+  width: 90vw;
+  max-width: 1400px;
+  margin: 2rem auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.veiculo-list-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #0a2540;
+  color: white;
+  display: grid;
+  grid-template-columns: 60px repeat(5, 1fr) 210px;/*grid-template-columns: 60px repeat(5, 1fr) 170px;  Reduzido para 170px */
+  padding: 1rem 1.5rem; /* Reduzido o padding */
+  align-items: center;
+  gap: 1rem; /* Espaçamento reduzido */
+  font-size: 0.9rem; /* Fonte ligeiramente menor */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.header-cell {
+  font-weight: 600;
+  text-align: center;
+}
+
+.veiculo-list-body {
+  overflow-y: auto;
+  max-height: 65vh;
+}
+
+.veiculo-row {
+  display: grid;
+  grid-template-columns: 60px repeat(5, 1fr) 210px;/*grid-template-columns: 60px repeat(5, 1fr) 170px;  Reduzido para 170px */
+  padding: 0.8rem 1.5rem; /* Padding reduzido */
+  align-items: center;
+  gap: 1rem; /* Espaçamento reduzido */
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.veiculo-row:hover {
+  background-color: #f9f9f9;
+}
+
+.row-cell {
+  padding: 0.4rem 0;
+  text-align: center;
+  font-size: 0.9rem; /* Fonte ligeiramente menor */
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem; /* Espaçamento reduzido entre botões */
+  min-width: 210px;/*min-width: 170px;  Ajustado para 170px */
+}
+
+.edit-btn, .delete-btn {
+  padding: 0.5rem 0.8rem; /* Tamanho reduzido */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem; /* Espaçamento reduzido */
+  font-size: 0.82rem; /* Fonte menor */
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.edit-btn {
+  background-color: #4e9af1;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #3a8ae4;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.delete-btn {
+  background-color: #ff5e5e;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #ff4444;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+  font-size: 0.85rem; /* Ícone ligeiramente menor */
+}
+
+/* Estilização personalizada da scrollbar */
+.veiculo-list-body::-webkit-scrollbar {
+  width: 6px; /* Scrollbar mais fina */
+}
+
+.veiculo-list-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.veiculo-list-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.veiculo-list-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
