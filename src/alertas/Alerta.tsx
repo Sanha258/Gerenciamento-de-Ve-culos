@@ -32,7 +32,7 @@ const Alerta: React.FC<AlertaProps> = ({
     setIsVisible(false);
     setTimeout(() => {
       if (onClose) onClose();
-    }, 300); // Tempo para a animação de fade-out
+    }, 300);
   };
 
   if (!isVisible) return null;

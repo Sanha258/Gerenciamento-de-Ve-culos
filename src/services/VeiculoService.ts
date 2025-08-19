@@ -1,4 +1,3 @@
-// VeiculoService.ts
 import axios from 'axios';
 import type { Veiculo } from '../types/Veiculo';
 
@@ -98,6 +97,16 @@ export const VeiculoService = {
         throw new Error(serverMessage);
       }
       throw new Error('Erro desconhecido ao excluir veículo');
+    }
+  },
+
+  async verificarPlaca(placa: string): Promise<boolean> {
+    try {
+      const response = await api.get<boolean>(`/veiculos/verificar-placa?placa=${placa}`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao verificar placa:', error);
+      throw new Error('Erro ao verificar placa');
     }
   }
 };

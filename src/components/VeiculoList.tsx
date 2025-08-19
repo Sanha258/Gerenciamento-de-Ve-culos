@@ -52,7 +52,7 @@ const VeiculoList: React.FC<VeiculoListProps> = ({ veiculos, onEdit, onDelete })
                 <span className="icon">🗑️</span> Remover
               </button>
 
-              {/* Diálogo de confirmação */}
+              
               {showConfirm === veiculo.id && (
                 <div className="confirm-dialog">
                   <div className="confirm-content">

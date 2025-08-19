@@ -1,19 +1,14 @@
-// components/VeiculoForm.tsx
 import React, { useState } from 'react';
 import './VeiculoForm.css';
 import Alerta from '../alertas/Alerta';
 import type { Veiculo } from '../types/Veiculo';
+import { VeiculoService } from '../services/VeiculoService';
 
 interface VeiculoFormProps {
-  veiculo?: {
-    modelo: string;
-    marca: string;
-    ano: number;
-    placa: string;
-    cor: string;
-  };
+  veiculo?: Veiculo;
   onSubmit: (veiculo: Veiculo) => void;
   onCancel: () => void;
+  isOpen: boolean;
 }
 
 const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel }) => {
@@ -26,12 +21,18 @@ const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel }
   });
   const [alerta, setAlerta] = useState<{ mensagem: string; tipo: 'sucesso' | 'erro' } | null>(null);
 
+  const validarPlaca = (placa: string): boolean => {
+    const padraoAntigo = /^[A-Z]{3}[0-9]{4}$/;
+    const padraoMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/;
+    return padraoAntigo.test(placa) || padraoMercosul.test(placa);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: name === 'ano' ? Number(value) : value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.marca || !formData.modelo || !formData.placa || !formData.ano || !formData.cor) {
@@ -39,7 +40,40 @@ const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel }
       return;
     }
     
-    onSubmit(formData);
+    const placaFormatada = formData.placa.toUpperCase().replace(/-/g, '').replace(/\s/g, '');
+    
+    if (!validarPlaca(placaFormatada)) {
+      setAlerta({ 
+        mensagem: 'Formato de placa inválido. Use o padrão brasileiro (AAA1B23 ou AAA1234)', 
+        tipo: 'erro' 
+      });
+      return;
+    }
+
+    try {
+      const veiculos = await VeiculoService.listar();
+      const placaExistente = veiculos.some(v => 
+        v.placa.replace(/-/g, '') === placaFormatada && 
+        (!veiculo?.id || v.id !== veiculo.id)
+      );
+      
+      if (placaExistente) {
+        setAlerta({ mensagem: 'Placa já cadastrada!', tipo: 'erro' });
+        return;
+      }
+      
+      const placaFormatadaExibicao = placaFormatada.replace(/([A-Z]{3})([0-9A-Z]{4})/, '$1-$2');
+      
+      onSubmit({
+        ...formData,
+        placa: placaFormatadaExibicao
+      });
+    } catch (error) {
+      setAlerta({
+        mensagem: 'Erro ao verificar placa. Tente novamente.',
+        tipo: 'erro'
+      });
+    }
   };
 
   return (
@@ -107,8 +141,12 @@ const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel }
             id="placa"
             name="placa"
             value={formData.placa}
-            onChange={handleChange}
-            placeholder="Ex: ABC1D23"
+            onChange={(e) => {
+              const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+              setFormData({ ...formData, placa: value });
+            }}
+            placeholder="Ex: ABC1D23 ou ABC1234"
+            maxLength={7}
             required
           />
         </div>
