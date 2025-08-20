@@ -135,4 +135,15 @@ public class VeiculoServiceImplTest {
         assertEquals("Marca do veículo é obrigatória.", exception.getMessage());
     }
 
+    @Test
+    void cadastrarVeiculo_ComModeloVazio_DeveLancarExcecao() {
+        
+        veiculoDTO.setModelo("   ");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertEquals("Modelo do veículo é obrigatório.", exception.getMessage());
+    }
+
 }
