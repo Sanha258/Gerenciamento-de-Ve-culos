@@ -2,12 +2,14 @@ package locacao.veiculo.Controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -145,7 +147,7 @@ public class VeiculoControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.marca").value("Fiat"));
     }
-    
+
      @Test
     void atualizar_ComIdInexistente_DeveRetornar404() throws Exception {
         when(veiculoService.atualizarVeiculo(eq(999L), any(VeiculoDTO.class)))
@@ -155,6 +157,14 @@ public class VeiculoControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(veiculoDTO)))
                 .andExpect(status().isBadRequest());
+    }
+
+     @Test
+    void excluir_ComIdExistente_DeveRetornar204() throws Exception {
+        doNothing().when(veiculoService).excluirVeiculo(1L);
+
+        mockMvc.perform(delete("/api/veiculos/1"))
+                .andExpect(status().isNoContent());
     }
 
 }
