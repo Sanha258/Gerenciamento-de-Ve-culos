@@ -146,4 +146,15 @@ public class VeiculoServiceImplTest {
         assertEquals("Modelo do veículo é obrigatório.", exception.getMessage());
     }
 
+     @Test
+    void cadastrarVeiculo_ComAnoInvalido_DeveLancarExcecao() {
+        
+        veiculoDTO.setAno(1899); 
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertEquals("Ano do veículo deve estar entre 1900 e o ano atual.", exception.getMessage());
+    }
+
 }
