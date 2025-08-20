@@ -2,7 +2,9 @@ package locacao.veiculo.service.Impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -70,6 +72,18 @@ public class VeiculoServiceImplTest {
 
         verify(veiculoRepository).existsByPlaca("ABC1234");
         verify(veiculoRepository).save(any(VeiculoEntity.class));
+    }
+
+    @Test
+    void cadastrarVeiculo_ComPlacaExistente_DeveLancarExcecao() {
+        
+        when(veiculoRepository.existsByPlaca("ABC1234")).thenReturn(true);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertEquals("Placa já cadastrada!", exception.getMessage());
+        verify(veiculoRepository, never()).save(any(VeiculoEntity.class));
     }
 
 
