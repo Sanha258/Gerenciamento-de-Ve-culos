@@ -164,11 +164,27 @@ public class VeiculoServiceImplTest {
     
         int anoFuturo = Year.now().getValue() + 1;
         veiculoDTO.setAno(anoFuturo);
-        
+
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
             () -> veiculoService.cadastrarVeiculo(veiculoDTO));
         
         assertEquals("Ano do veículo deve estar entre 1900 e o ano atual.", exception.getMessage());
+    }
+
+    @Test
+    void cadastrarVeiculo_ComPlacaMercosulValida_DeveCadastrarComSucesso() {
+        
+        veiculoDTO.setPlaca("ABC1D23");
+        when(veiculoRepository.existsByPlaca("ABC1D23")).thenReturn(false);
+        when(veiculoMapper.toEntity(any(VeiculoDTO.class))).thenReturn(veiculoEntity);
+        when(veiculoRepository.save(any(VeiculoEntity.class))).thenReturn(veiculoEntity);
+        when(veiculoMapper.toDTO(veiculoEntity)).thenReturn(veiculoDTO);
+
+        VeiculoDTO resultado = veiculoService.cadastrarVeiculo(veiculoDTO);
+
+        assertNotNull(resultado);
+        verify(veiculoRepository).existsByPlaca("ABC1D23");
+        verify(veiculoRepository).save(any(VeiculoEntity.class));
     }
 
 }
