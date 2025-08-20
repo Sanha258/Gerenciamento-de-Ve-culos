@@ -201,4 +201,16 @@ public class VeiculoServiceImplTest {
         assertEquals("Fiat", resultado.getMarca());
         verify(veiculoRepository).findById(id);
     }
+
+    @Test
+    void buscarVeiculoPorId_ComIdInexistente_DeveLancarExcecao() {
+        
+        Long id = 999L;
+        when(veiculoRepository.findById(id)).thenReturn(Optional.empty());
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.buscarVeiculoPorId(id));
+        
+        assertEquals("Veículo não encontrado com o ID: 999", exception.getMessage());
+    }
 }
