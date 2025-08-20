@@ -9,6 +9,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Year;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -151,6 +153,18 @@ public class VeiculoServiceImplTest {
         
         veiculoDTO.setAno(1899); 
 
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertEquals("Ano do veículo deve estar entre 1900 e o ano atual.", exception.getMessage());
+    }
+
+     @Test
+    void cadastrarVeiculo_ComAnoFuturo_DeveLancarExcecao() {
+    
+        int anoFuturo = Year.now().getValue() + 1;
+        veiculoDTO.setAno(anoFuturo);
+        
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
             () -> veiculoService.cadastrarVeiculo(veiculoDTO));
         
