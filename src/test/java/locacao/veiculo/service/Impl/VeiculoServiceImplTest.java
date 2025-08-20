@@ -109,6 +109,20 @@ public class VeiculoServiceImplTest {
         assertTrue(exception.getMessage().contains("Formato de placa inválido"));
     }
 
+    @Test
+    void cadastrarVeiculo_ComPlacaComTraco_DeveLimparPlaca() {
+        
+        veiculoDTO.setPlaca("ABC-1234");
+        when(veiculoRepository.existsByPlaca("ABC1234")).thenReturn(false);
+        when(veiculoMapper.toEntity(any(VeiculoDTO.class))).thenReturn(veiculoEntity);
+        when(veiculoRepository.save(any(VeiculoEntity.class))).thenReturn(veiculoEntity);
+        when(veiculoMapper.toDTO(veiculoEntity)).thenReturn(veiculoDTO);
+
+        VeiculoDTO resultado = veiculoService.cadastrarVeiculo(veiculoDTO);
+
+        assertNotNull(resultado);
+        verify(veiculoRepository).existsByPlaca("ABC1234"); 
+    }
 
 
 
