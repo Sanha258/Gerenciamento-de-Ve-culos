@@ -124,6 +124,15 @@ public class VeiculoServiceImplTest {
         verify(veiculoRepository).existsByPlaca("ABC1234"); 
     }
 
+    @Test
+    void cadastrarVeiculo_ComMarcaNula_DeveLancarExcecao() {
+        
+        veiculoDTO.setMarca(null);
 
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertEquals("Marca do veículo é obrigatória.", exception.getMessage());
+    }
 
 }
