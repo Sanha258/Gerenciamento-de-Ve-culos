@@ -1,9 +1,10 @@
 package locacao.veiculo.Controller;
 
 import static org.mockito.ArgumentMatchers.any;
-
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -131,6 +132,18 @@ public class VeiculoControllerTest {
 
         mockMvc.perform(get("/api/veiculos/999"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void atualizar_ComDadosValidos_DeveRetornar200() throws Exception {
+        when(veiculoService.atualizarVeiculo(eq(1L), any(VeiculoDTO.class))).thenReturn(veiculoDTO);
+
+        mockMvc.perform(put("/api/veiculos/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(veiculoDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.marca").value("Fiat"));
     }
 
 }
