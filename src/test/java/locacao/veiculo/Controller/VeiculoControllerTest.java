@@ -1,13 +1,10 @@
 package locacao.veiculo.Controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
+
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Arrays;
 import java.util.List;
 
-import org.hibernate.event.spi.PostCollectionRecreateEvent;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +73,24 @@ public class VeiculoControllerTest {
                 .andExpect(jsonPath("$.modelo").value("Uno"))
                 .andExpect(jsonPath("$.ano").value(2020))
                 .andExpect(jsonPath("$.placa").value("ABC1234"));
+    }
+
+    @Test
+    void cadastrar_ComDadosInvalidos_DeveRetornar400() throws Exception {
+        
+        VeiculoDTO veiculoInvalido = new VeiculoDTO();
+        veiculoInvalido.setMarca(""); 
+        veiculoInvalido.setModelo(""); 
+        veiculoInvalido.setAno(1899); 
+        veiculoInvalido.setPlaca(""); 
+
+        when(veiculoService.cadastrarVeiculo(any(VeiculoDTO.class)))
+                .thenThrow(new IllegalArgumentException("Marca do veículo é obrigatória."));
+
+        mockMvc.perform(post("/api/veiculos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(veiculoInvalido)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Marca do veículo é obrigatória."));
     }
 }
