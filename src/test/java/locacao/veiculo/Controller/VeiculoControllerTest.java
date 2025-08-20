@@ -113,4 +113,15 @@ public class VeiculoControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
     }
+
+    @Test
+    void buscarPorId_ComIdExistente_DeveRetornar200() throws Exception {
+        when(veiculoService.buscarVeiculoPorId(1L)).thenReturn(veiculoDTO);
+
+        mockMvc.perform(get("/api/veiculos/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.marca").value("Fiat"));
+    }
+
 }
