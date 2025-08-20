@@ -98,6 +98,18 @@ public class VeiculoServiceImplTest {
         assertTrue(exception.getMessage().contains("Placa deve ter 7 caracteres"));
     }
 
+     @Test
+    void cadastrarVeiculo_ComPlacaFormatoInvalido_DeveLancarExcecao() {
+        
+        veiculoDTO.setPlaca("123ABCD"); 
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertTrue(exception.getMessage().contains("Formato de placa inválido"));
+    }
+
+
 
 
 }
