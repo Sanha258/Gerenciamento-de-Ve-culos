@@ -3,6 +3,7 @@ package locacao.veiculo.service.Impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -85,6 +86,18 @@ public class VeiculoServiceImplTest {
         assertEquals("Placa já cadastrada!", exception.getMessage());
         verify(veiculoRepository, never()).save(any(VeiculoEntity.class));
     }
+
+    @Test
+    void cadastrarVeiculo_ComPlacaInvalida_DeveLancarExcecao() {
+        
+        veiculoDTO.setPlaca("ABC12"); 
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.cadastrarVeiculo(veiculoDTO));
+        
+        assertTrue(exception.getMessage().contains("Placa deve ter 7 caracteres"));
+    }
+
 
 
 }
