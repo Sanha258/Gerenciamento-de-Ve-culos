@@ -3,6 +3,7 @@ package locacao.veiculo.Controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -165,6 +166,15 @@ public class VeiculoControllerTest {
 
         mockMvc.perform(delete("/api/veiculos/1"))
                 .andExpect(status().isNoContent());
+    }
+
+     @Test
+    void excluir_ComIdInexistente_DeveRetornar404() throws Exception {
+        doThrow(new IllegalArgumentException("Veículo não encontrado com o ID: 999"))
+                .when(veiculoService).excluirVeiculo(999L);
+
+        mockMvc.perform(delete("/api/veiculos/999"))
+                .andExpect(status().isBadRequest());
     }
 
 }
