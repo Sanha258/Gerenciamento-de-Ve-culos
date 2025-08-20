@@ -227,4 +227,17 @@ public class VeiculoServiceImplTest {
         verify(veiculoRepository).existsById(id);
         verify(veiculoRepository).deleteById(id);
     }
+
+    @Test
+    void excluirVeiculo_ComIdInexistente_DeveLancarExcecao() {
+        
+        Long id = 999L;
+        when(veiculoRepository.existsById(id)).thenReturn(false);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> veiculoService.excluirVeiculo(id));
+        
+        assertEquals("Veículo não encontrado com o ID: 999", exception.getMessage());
+        verify(veiculoRepository, never()).deleteById(id);
+    }
 }
