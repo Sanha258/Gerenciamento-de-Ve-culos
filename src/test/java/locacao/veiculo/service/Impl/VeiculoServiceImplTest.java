@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Year;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -187,4 +188,17 @@ public class VeiculoServiceImplTest {
         verify(veiculoRepository).save(any(VeiculoEntity.class));
     }
 
+    @Test
+    void buscarVeiculoPorId_ComIdExistente_DeveRetornarVeiculo() {
+        
+        Long id = 1L;
+        when(veiculoRepository.findById(id)).thenReturn(Optional.of(veiculoEntity));
+        when(veiculoMapper.toDTO(veiculoEntity)).thenReturn(veiculoDTO);
+
+        VeiculoDTO resultado = veiculoService.buscarVeiculoPorId(id);
+
+        assertNotNull(resultado);
+        assertEquals("Fiat", resultado.getMarca());
+        verify(veiculoRepository).findById(id);
+    }
 }
