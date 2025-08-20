@@ -1,0 +1,80 @@
+package locacao.veiculo.Controller;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.hibernate.event.spi.PostCollectionRecreateEvent;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import locacao.veiculo.DTO.VeiculoDTO;
+import locacao.veiculo.Service.VeiculoService;
+
+@WebMvcTest(VeiculoController.class)
+public class VeiculoControllerTest {
+    
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
+    private VeiculoService veiculoService;
+
+    private VeiculoDTO veiculoDTO;
+    private List<VeiculoDTO> veiculosList;
+
+    @BeforeEach
+    void setUp() {
+        veiculoDTO = new VeiculoDTO();
+        veiculoDTO.setId(1L);
+        veiculoDTO.setMarca("Fiat");
+        veiculoDTO.setModelo("Uno");
+        veiculoDTO.setAno(2020);
+        veiculoDTO.setPlaca("ABC1234");
+
+        VeiculoDTO veiculoDTO2 = new VeiculoDTO();
+        veiculoDTO2.setId(2L);
+        veiculoDTO2.setMarca("Volkswagen");
+        veiculoDTO2.setModelo("Gol");
+        veiculoDTO2.setAno(2021);
+        veiculoDTO2.setPlaca("XYZ5678");
+
+        veiculosList = Arrays.asList(veiculoDTO, veiculoDTO2);
+    }
+
+     @Test
+    void cadastrar_ComDadosValidos_DeveRetornar201() throws Exception {
+        when(veiculoService.cadastrarVeiculo(any(VeiculoDTO.class))).thenReturn(veiculoDTO);
+
+        mockMvc.perform(post("/api/veiculos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(veiculoDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.marca").value("Fiat"))
+                .andExpect(jsonPath("$.modelo").value("Uno"))
+                .andExpect(jsonPath("$.ano").value(2020))
+                .andExpect(jsonPath("$.placa").value("ABC1234"));
+    }
+}
