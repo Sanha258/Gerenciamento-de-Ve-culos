@@ -104,4 +104,13 @@ public class VeiculoControllerTest {
                 .andExpect(jsonPath("$[0].marca").value("Fiat"))
                 .andExpect(jsonPath("$[1].marca").value("Volkswagen"));
     }
+
+     @Test
+    void listarTodos_SemVeiculos_DeveRetornar200() throws Exception {
+        when(veiculoService.listarTodosVeiculos()).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/veiculos"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]"));
+    }
 }
