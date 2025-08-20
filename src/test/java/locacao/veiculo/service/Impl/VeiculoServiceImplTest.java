@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -212,5 +213,18 @@ public class VeiculoServiceImplTest {
             () -> veiculoService.buscarVeiculoPorId(id));
         
         assertEquals("Veículo não encontrado com o ID: 999", exception.getMessage());
+    }
+
+     @Test
+    void excluirVeiculo_ComIdExistente_DeveExcluirComSucesso() {
+        
+        Long id = 1L;
+        when(veiculoRepository.existsById(id)).thenReturn(true);
+        doNothing().when(veiculoRepository).deleteById(id);
+
+        veiculoService.excluirVeiculo(id);
+
+        verify(veiculoRepository).existsById(id);
+        verify(veiculoRepository).deleteById(id);
     }
 }
