@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,21 @@ public class VeiculoServiceImpl implements VeiculoService {
     @Autowired
     private VeiculoMapper veiculoMapper;
 
+    private static final Pattern PLACA_PATTERN = 
+        Pattern.compile("^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$", Pattern.CASE_INSENSITIVE);
+
     @Override
     @Transactional
     public VeiculoDTO cadastrarVeiculo(VeiculoDTO veiculoDTO) {
         validarVeiculo(veiculoDTO);
-        if (veiculoRepository.existsByPlaca(veiculoDTO.getPlaca())) {
-            throw new RuntimeException("Placa já existe!");
+        
+        String placaLimpa = limparPlaca(veiculoDTO.getPlaca());
+        validarFormatoPlaca(placaLimpa);
+        
+        veiculoDTO.setPlaca(placaLimpa);
+        
+        if (veiculoRepository.existsByPlaca(placaLimpa)) {
+            throw new RuntimeException("Placa já cadastrada!");
         }
 
         VeiculoEntity veiculoEntity = veiculoMapper.toEntity(veiculoDTO);
@@ -55,19 +65,24 @@ public class VeiculoServiceImpl implements VeiculoService {
     @Transactional
     public VeiculoDTO atualizarVeiculo(Long id, VeiculoDTO veiculoDTO) {
         validarVeiculo(veiculoDTO);
+        
+        String placaLimpa = limparPlaca(veiculoDTO.getPlaca());
+        validarFormatoPlaca(placaLimpa);
+        
+        veiculoDTO.setPlaca(placaLimpa);
+        
         VeiculoEntity veiculoExistente = veiculoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Veículo não encontrado com o ID: " + id));
 
-        if (!veiculoExistente.getPlaca().equals(veiculoDTO.getPlaca()) && 
-            veiculoRepository.existsByPlaca(veiculoDTO.getPlaca())) {
-            throw new RuntimeException("Placa já existe!");
+        if (!veiculoExistente.getPlaca().equals(placaLimpa) && 
+            veiculoRepository.existsByPlaca(placaLimpa)) {
+            throw new RuntimeException("Placa já cadastrada!");
         }
 
         veiculoExistente.setMarca(veiculoDTO.getMarca());
         veiculoExistente.setModelo(veiculoDTO.getModelo());
         veiculoExistente.setAno(veiculoDTO.getAno());
-        veiculoExistente.setPlaca(veiculoDTO.getPlaca());
-        veiculoExistente.setCor(veiculoDTO.getCor());
+        veiculoExistente.setPlaca(placaLimpa);
 
         VeiculoEntity veiculoAtualizado = veiculoRepository.save(veiculoExistente);
         return veiculoMapper.toDTO(veiculoAtualizado);
@@ -95,9 +110,25 @@ public class VeiculoServiceImpl implements VeiculoService {
         if (veiculoDTO.getPlaca() == null || veiculoDTO.getPlaca().trim().isEmpty()) {
             throw new IllegalArgumentException("Placa do veículo é obrigatória.");
         }
-        if (veiculoDTO.getCor() == null || veiculoDTO.getCor().trim().isEmpty()) {
-            throw new IllegalArgumentException("Cor do veículo é obrigatória.");
+    }
+    
+    private void validarFormatoPlaca(String placa) {
+        if (placa == null) {
+            throw new IllegalArgumentException("Placa não pode ser nula");
+        }
+        
+        if (placa.length() != 7) {
+            throw new IllegalArgumentException("Placa deve ter 7 caracteres (ex: ABC1234 ou ABC1D23)");
+        }
+        
+        if (!PLACA_PATTERN.matcher(placa).matches()) {
+            throw new IllegalArgumentException(
+                "Formato de placa inválido. Use padrão brasileiro: " +
+                "Antigo (AAA1234) ou Mercosul (AAA1D23)");
         }
     }
     
+    private String limparPlaca(String placa) {
+        return placa.replaceAll("[-\\s]", "").toUpperCase();
+    }
 }

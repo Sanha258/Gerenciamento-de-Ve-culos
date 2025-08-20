@@ -7,18 +7,18 @@ public class VeiculoDTO {
     private String modelo;
     private Integer ano;
     private String placa;
-    private String cor;
+    
 
     public VeiculoDTO() {
     }
 
-    public VeiculoDTO(Long id, String marca, String modelo, Integer ano, String placa, String cor) {
+    public VeiculoDTO(Long id, String marca, String modelo, Integer ano, String placa) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
         this.ano = ano;
         this.placa = placa;
-        this.cor = cor;
+        
     }
 
     public Long getId() {
@@ -61,13 +61,6 @@ public class VeiculoDTO {
         this.placa = placa;
     }
 
-    public String getCor() {
-        return cor;
-    }
-
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
 
     
 

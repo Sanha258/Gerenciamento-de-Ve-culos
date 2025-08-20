@@ -15,7 +15,7 @@ public class VeiculoMapper {
         entity.setModelo(dto.getModelo());
         entity.setAno(dto.getAno());
         entity.setPlaca(dto.getPlaca());
-        entity.setCor(dto.getCor());
+
         return entity;
     }
 
@@ -25,8 +25,8 @@ public class VeiculoMapper {
                 entity.getMarca(),
                 entity.getModelo(),
                 entity.getAno(),
-                entity.getPlaca(),
-                entity.getCor()
+                entity.getPlaca()
+                
         );
     }
     

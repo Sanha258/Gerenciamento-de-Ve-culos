@@ -27,18 +27,16 @@ public class VeiculoEntity {
     @Column(unique = true, nullable = false)
     private String placa;
 
-    @Column(nullable = false)
-    private String cor;
 
     public VeiculoEntity() {
     }
 
-    public VeiculoEntity(String marca, String modelo, Integer ano, String placa, String cor) {
+    public VeiculoEntity(String marca, String modelo, Integer ano, String placa) {
         this.marca = marca;
         this.modelo = modelo;
         this.ano = ano;
         this.placa = placa;
-        this.cor = cor;
+        
     }
 
     public Long getId() {
@@ -81,13 +79,7 @@ public class VeiculoEntity {
         this.placa = placa;
     }
 
-    public String getCor() {
-        return cor;
-    }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
 
     
 }
