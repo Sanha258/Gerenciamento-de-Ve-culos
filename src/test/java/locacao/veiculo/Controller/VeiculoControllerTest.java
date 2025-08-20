@@ -145,5 +145,16 @@ public class VeiculoControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.marca").value("Fiat"));
     }
+    
+     @Test
+    void atualizar_ComIdInexistente_DeveRetornar404() throws Exception {
+        when(veiculoService.atualizarVeiculo(eq(999L), any(VeiculoDTO.class)))
+                .thenThrow(new IllegalArgumentException("Veículo não encontrado com o ID: 999"));
+
+        mockMvc.perform(put("/api/veiculos/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(veiculoDTO)))
+                .andExpect(status().isBadRequest());
+    }
 
 }
