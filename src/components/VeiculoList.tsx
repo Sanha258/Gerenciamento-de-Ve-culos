@@ -49,24 +49,23 @@ const VeiculoList: React.FC<VeiculoListProps> = ({ veiculos, onEdit, onDelete })
               <button className="delete-btn" onClick={() => veiculo.id && handleDeleteClick(veiculo.id)}>
                 <span className="icon">🗑️</span> Remover
               </button>
-
-              
-              {showConfirm === veiculo.id && (
-                <div className="confirm-dialog">
-                  <div className="confirm-content">
-                    <p>Tem certeza que deseja remover este veículo?</p>
-                    <div className="confirm-buttons">
-                      <button className="confirm-btn confirm-yes" onClick={() => confirmDelete(veiculo.id!)}>
-                        Sim
-                      </button>
-                      <button className="confirm-btn confirm-no" onClick={cancelDelete}>
-                        Não
-                      </button>
-                    </div>
+            </div>
+            
+            {showConfirm === veiculo.id && (
+              <div className="confirm-dialog">
+                <div className="confirm-content">
+                  <p>Tem certeza que deseja remover este veículo?</p>
+                  <div className="confirm-buttons">
+                    <button className="confirm-btn confirm-yes" onClick={() => confirmDelete(veiculo.id!)}>
+                      Sim
+                    </button>
+                    <button className="confirm-btn confirm-no" onClick={cancelDelete}>
+                      Não
+                    </button>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ))}
       </div>

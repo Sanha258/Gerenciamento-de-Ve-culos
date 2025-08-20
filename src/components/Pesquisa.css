@@ -1,0 +1,353 @@
+.pesquisar-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin: 0 auto 1.2rem auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8ecf0;
+  width: 92vw;
+  max-width: 1360px;
+}
+
+.pesquisar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid #0a2540;
+}
+
+.pesquisar-header h3 {
+  margin: 0;
+  color: #0a2540;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.limpar-filtros-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ff4444);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.limpar-filtros-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.filtros-row {
+  display: flex;
+  gap: 1.5rem; /* MODIFICADO: aumentado de 1rem para 1.5rem */
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+/* Campo de pesquisa - mais compacto */
+.pesquisa-input-container {
+  position: relative;
+  flex: 2;
+  min-width: 250px;
+}
+
+.pesquisa-input {
+  width: 800px;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  border: 2px solid #d1d9e6;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+  background: white;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.pesquisa-input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.pesquisa-input:focus {
+  border-color: #0a2540;
+  box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.1);
+}
+
+.pesquisa-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0a2540;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Filtro por marca - mais compacto e separado */
+.filtro-marca-container {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+}
+
+.filtro-marca-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid #d1d9e6;
+  border-radius: 8px;
+  background: white;
+  color: #0a2540;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.filtro-marca-btn:hover {
+  border-color: #0a2540;
+  background-color: #f8fafc;
+}
+
+.filtro-marca-btn.ativo {
+  border-color: #0a2540;
+  background-color: #f0f7ff;
+  box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.1);
+}
+
+.marcas-count {
+  background: #0a2540;
+  color: white;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.dropdown-arrow {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+  color: #0a2540;
+}
+
+.dropdown-arrow.aberto {
+  transform: rotate(180deg);
+}
+
+.marcas-dropdown {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #0a2540;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.marcas-list {
+  padding: 0.6rem;
+}
+
+.marca-option {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+
+.marca-option:hover {
+  background-color: #f0f7ff;
+}
+
+.marca-option input {
+  margin-right: 0.8rem;
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d1d9e6;
+  border-radius: 4px;
+  margin-right: 0.8rem;
+  position: relative;
+  transition: all 0.15s ease;
+  background: white;
+}
+
+.marca-option input:checked + .checkmark {
+  background: #0a2540;
+  border-color: #0a2540;
+}
+
+.marca-option input:checked + .checkmark::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Filtros ativos */
+.filtros-ativos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f4f8;
+}
+
+.filtro-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #0a2540;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.filtro-tag button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.filtro-tag button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .pesquisar-container {
+    width: 94vw;
+    padding: 1rem;
+  }
+  
+  .filtros-row {
+    gap: 1.2rem; /* MODIFICADO: aumentado de 0.8rem para 1.2rem */
+  }
+  
+  .pesquisa-input {
+    padding: 0.8rem 0.9rem 0.8rem 2.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .filtro-marca-btn {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pesquisar-container {
+    width: 96vw;
+    padding: 0.9rem;
+    margin: 0 auto 0.9rem auto;
+  }
+
+  .filtros-row {
+    flex-direction: column;
+    gap: 1rem; /* MODIFICADO: aumentado de 0.7rem para 1rem */
+  }
+
+  .pesquisa-input-container {
+    min-width: auto;
+  }
+
+  .filtro-marca-container {
+    width: 100%;
+  }
+
+  .pesquisar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+
+  .limpar-filtros-btn {
+    align-self: stretch;
+    text-align: center;
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pesquisar-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .pesquisa-input {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.8rem 0.7rem 2.3rem;
+  }
+  
+  .filtro-marca-btn {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.8rem;
+  }
+  
+  .filtro-tag {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .pesquisa-icon {
+    left: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Scrollbar personalizada */
+.marcas-dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.marcas-dropdown::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.marcas-dropdown::-webkit-scrollbar-thumb {
+  background: #0a2540;
+  border-radius: 2px;
+}

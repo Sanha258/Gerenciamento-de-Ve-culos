@@ -20,12 +20,6 @@ const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel, 
   });
   const [alerta, setAlerta] = useState<{ mensagem: string; tipo: 'sucesso' | 'erro' } | null>(null);
 
-  const validarPlaca = (placa: string): boolean => {
-    const padraoAntigo = /^[A-Z]{3}[0-9]{4}$/;
-    const padraoMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/;
-    return padraoAntigo.test(placa) || padraoMercosul.test(placa);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: name === 'ano' ? Number(value) : value });
@@ -40,14 +34,6 @@ const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel, 
     }
     
     const placaFormatada = formData.placa.toUpperCase().replace(/-/g, '').replace(/\s/g, '');
-    
-    if (!validarPlaca(placaFormatada)) {
-      setAlerta({ 
-        mensagem: 'Formato de placa inválido. Use o padrão brasileiro (AAA1B23 ou AAA1234)', 
-        tipo: 'erro' 
-      });
-      return;
-    }
 
     try {
       const veiculos = await VeiculoService.listar();
@@ -130,7 +116,7 @@ const VeiculoForm: React.FC<VeiculoFormProps> = ({ veiculo, onSubmit, onCancel, 
               value={formData.ano}
               onChange={handleChange}
               min="1900"
-              max={new Date().getFullYear() + 1}
+              max={new Date().getFullYear() }
               placeholder="Ex: 2022"
               required
             />

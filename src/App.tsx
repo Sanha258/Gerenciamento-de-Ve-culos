@@ -1,33 +1,68 @@
-
 import './App.css';
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import VeiculoList from './components/VeiculoList';
 import VeiculoForm from './components/VeiculoForm';
+import Pesquisar from './components/Pesquisa';
 import Alerta from './alertas/Alerta';
 import { VeiculoService } from './services/VeiculoService';
 import type { Veiculo } from './types/Veiculo';
 
 function App() {
   const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
+  const [veiculosFiltrados, setVeiculosFiltrados] = useState<Veiculo[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingVeiculo, setEditingVeiculo] = useState<Veiculo | null>(null);
   const [alerta, setAlerta] = useState<{ mensagem: string; tipo: 'sucesso' | 'erro' } | null>(null);
+  const [termoPesquisa, setTermoPesquisa] = useState('');
+  const [marcasFiltro, setMarcasFiltro] = useState<string[]>([]);
 
   useEffect(() => {
     carregarVeiculos();
   }, []);
 
+  // Filtra os veículos quando os critérios mudam
+  useEffect(() => {
+    let veiculosFiltrados = veiculos;
+
+    // Filtro por texto
+    if (termoPesquisa) {
+      const termoLower = termoPesquisa.toLowerCase();
+      veiculosFiltrados = veiculosFiltrados.filter(veiculo =>
+        veiculo.modelo.toLowerCase().includes(termoLower) ||
+        veiculo.marca.toLowerCase().includes(termoLower)
+      );
+    }
+
+    // Filtro por marcas
+    if (marcasFiltro.length > 0) {
+      veiculosFiltrados = veiculosFiltrados.filter(veiculo =>
+        marcasFiltro.includes(veiculo.marca)
+      );
+    }
+
+    setVeiculosFiltrados(veiculosFiltrados);
+  }, [veiculos, termoPesquisa, marcasFiltro]);
+
   const carregarVeiculos = async () => {
     try {
       const lista = await VeiculoService.listar();
       setVeiculos(lista);
+      setVeiculosFiltrados(lista);
     } catch (error) {
       setAlerta({
         mensagem: error instanceof Error ? error.message : 'Erro ao carregar veículos',
         tipo: 'erro'
       });
     }
+  };
+
+  const handleSearchChange = (termo: string) => {
+    setTermoPesquisa(termo);
+  };
+
+  const handleFilterChange = (marcas: string[]) => {
+    setMarcasFiltro(marcas);
   };
 
   const handleCadastrarClick = () => {
@@ -96,8 +131,14 @@ function App() {
           />
         )}
         
+        <Pesquisar 
+          veiculos={veiculos}
+          onSearchChange={handleSearchChange}
+          onFilterChange={handleFilterChange}
+        />
+        
         <VeiculoList 
-          veiculos={veiculos} 
+          veiculos={veiculosFiltrados} 
           onEdit={handleEdit} 
           onDelete={handleDelete} 
         />

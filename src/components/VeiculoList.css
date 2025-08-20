@@ -197,13 +197,23 @@
   background-color: #0a2540;
   color: white;
   display: grid;
-  grid-template-columns: 60px repeat(5, 1fr) 210px;
+  grid-template-columns: 60px repeat(4, 1fr) 210px;
   padding: 1rem 1.5rem; 
   align-items: center;
   gap: 1rem; 
   font-size: 0.9rem; 
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.veiculo-row {
+  display: grid;
+  grid-template-columns: 60px repeat(4, 1fr) 210px;
+  padding: 0.8rem 1.5rem; 
+  align-items: center;
+  gap: 1rem; 
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
 }
 
 .header-cell {
@@ -216,15 +226,7 @@
   max-height: 65vh;
 }
 
-.veiculo-row {
-  display: grid;
-  grid-template-columns: 60px repeat(5, 1fr) 210px;
-  padding: 0.8rem 1.5rem; 
-  align-items: center;
-  gap: 1rem; 
-  border-bottom: 1px solid #f0f0f0;
-  transition: background-color 0.2s ease;
-}
+
 
 .veiculo-row:hover {
   background-color: #f9f9f9;
