@@ -3,7 +3,7 @@ package locacao.veiculo.Controller;
 import static org.mockito.ArgumentMatchers.any;
 
 import static org.mockito.Mockito.when;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -92,5 +92,16 @@ public class VeiculoControllerTest {
                 .content(objectMapper.writeValueAsString(veiculoInvalido)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Marca do veículo é obrigatória."));
+    }
+
+    @Test
+    void listarTodos_ComVeiculosExistentes_DeveRetornar200() throws Exception {
+        when(veiculoService.listarTodosVeiculos()).thenReturn(veiculosList);
+
+        mockMvc.perform(get("/api/veiculos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].marca").value("Fiat"))
+                .andExpect(jsonPath("$[1].marca").value("Volkswagen"));
     }
 }
