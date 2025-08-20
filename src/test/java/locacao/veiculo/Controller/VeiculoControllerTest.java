@@ -124,4 +124,13 @@ public class VeiculoControllerTest {
                 .andExpect(jsonPath("$.marca").value("Fiat"));
     }
 
+     @Test
+    void buscarPorId_ComIdInexistente_DeveRetornar404() throws Exception {
+        when(veiculoService.buscarVeiculoPorId(999L))
+                .thenThrow(new IllegalArgumentException("Veículo não encontrado com o ID: 999"));
+
+        mockMvc.perform(get("/api/veiculos/999"))
+                .andExpect(status().isBadRequest());
+    }
+
 }
