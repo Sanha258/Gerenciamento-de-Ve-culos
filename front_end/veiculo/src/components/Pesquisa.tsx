@@ -86,7 +86,7 @@ const Pesquisar: React.FC<PesquisarProps> = ({ veiculos, onSearchChange, onFilte
           <input
             ref={inputRef}
             type="text"
-            placeholder="Pesquisar por modelo..."
+            placeholder="Pesquisar por modelo, marca ou placa..."
             value={termoPesquisa}
             onChange={handlePesquisaChange}
             className="pesquisa-input"
