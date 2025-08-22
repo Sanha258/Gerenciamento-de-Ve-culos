@@ -1,3 +1,4 @@
+
 .pesquisar-container {
   background-color: white;
   border-radius: 12px;
@@ -5,8 +6,9 @@
   margin: 0 auto 1.2rem auto;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #e8ecf0;
-  width: 92vw;
+  width: 95%;
   max-width: 1360px;
+  box-sizing: border-box;
 }
 
 .pesquisar-header {
@@ -16,6 +18,8 @@
   margin-bottom: 1.2rem;
   padding-bottom: 0.8rem;
   border-bottom: 2px solid #0a2540;
+  flex-wrap: wrap;
+  gap: 0.8rem;
 }
 
 .pesquisar-header h3 {
@@ -24,6 +28,8 @@
   font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 150px;
 }
 
 .limpar-filtros-btn {
@@ -36,6 +42,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .limpar-filtros-btn:hover {
@@ -45,11 +52,12 @@
 
 .filtros-row {
   display: flex;
-  gap: 1.5rem; 
+
+  gap: 1rem;
   align-items: stretch;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
-
 
 .pesquisa-input-container {
   position: relative;
@@ -58,7 +66,7 @@
 }
 
 .pesquisa-input {
-  width: 800px;
+  width: 100%;
   padding: 0.85rem 1rem 0.85rem 2.8rem;
   border: 2px solid #d1d9e6;
   border-radius: 8px;
@@ -68,6 +76,7 @@
   background: white;
   color: #2d3748;
   font-weight: 500;
+  box-sizing: border-box;
 }
 
 .pesquisa-input::placeholder {
@@ -91,7 +100,6 @@
   opacity: 0.7;
 }
 
-
 .filtro-marca-container {
   position: relative;
   flex: 1;
@@ -113,6 +121,8 @@
   transition: all 0.2s ease;
   width: 100%;
   justify-content: space-between;
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .filtro-marca-btn:hover {
@@ -214,7 +224,6 @@
   transform: translate(-50%, -50%);
 }
 
-/* Filtros ativos */
 .filtros-ativos {
   display: flex;
   flex-wrap: wrap;
@@ -234,6 +243,7 @@
   border-radius: 16px;
   font-size: 0.85rem;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .filtro-tag button {
@@ -257,15 +267,27 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Responsivo */
-@media (max-width: 1024px) {
+.marcas-dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.marcas-dropdown::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.marcas-dropdown::-webkit-scrollbar-thumb {
+  background: #0a2540;
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 1024px) {
   .pesquisar-container {
-    width: 94vw;
+    width: 96%;
     padding: 1rem;
   }
   
   .filtros-row {
-    gap: 1.2rem; 
+    gap: 1rem;
   }
   
   .pesquisa-input {
@@ -277,26 +299,31 @@
     padding: 0.8rem 0.9rem;
     font-size: 0.9rem;
   }
+  
+  .pesquisar-header h3 {
+    font-size: 1.15rem;
+  }
 }
 
-@media (max-width: 768px) {
-  .pesquisar-container {
-    width: 96vw;
-    padding: 0.9rem;
-    margin: 0 auto 0.9rem auto;
-  }
-
+@media screen and (max-width: 900px) {
   .filtros-row {
     flex-direction: column;
-    gap: 1rem; 
-  }
 
-  .pesquisa-input-container {
-    min-width: auto;
   }
-
+  
+  .pesquisa-input-container,
   .filtro-marca-container {
     width: 100%;
+    min-width: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pesquisar-container {
+    width: 98%;
+    padding: 0.9rem;
+    margin: 0 auto 0.9rem auto;
+    border-radius: 10px;
   }
 
   .pesquisar-header {
@@ -310,9 +337,23 @@
     text-align: center;
     padding: 0.6rem;
   }
+  
+  .pesquisa-input {
+    font-size: 16px; 
+  }
 }
 
-@media (max-width: 480px) {
+
+@media screen and (max-width: 480px) {
+  .pesquisar-container {
+    width: 100%;
+    border-radius: 0;
+    margin: 0 0 0.8rem 0;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
+  }
+  
   .pesquisar-header h3 {
     font-size: 1.1rem;
   }
@@ -336,17 +377,28 @@
     left: 0.8rem;
     font-size: 0.9rem;
   }
+  
+  .marcas-dropdown {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 300px;
+    max-height: 60vh;
+  }
 }
 
-.marcas-dropdown::-webkit-scrollbar {
-  width: 5px;
-}
-
-.marcas-dropdown::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-.marcas-dropdown::-webkit-scrollbar-thumb {
-  background: #0a2540;
-  border-radius: 2px;
+@media screen and (max-width: 360px) {
+  .pesquisa-input::placeholder {
+    font-size: 0.8rem;
+  }
+  
+  .filtro-marca-btn {
+    font-size: 0.8rem;
+  }
+  
+  .filtro-tag {
+    font-size: 0.75rem;
+  }
 }
