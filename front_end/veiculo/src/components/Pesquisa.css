@@ -45,12 +45,12 @@
 
 .filtros-row {
   display: flex;
-  gap: 1.5rem; /* MODIFICADO: aumentado de 1rem para 1.5rem */
+  gap: 1.5rem; 
   align-items: stretch;
   margin-bottom: 1rem;
 }
 
-/* Campo de pesquisa - mais compacto */
+
 .pesquisa-input-container {
   position: relative;
   flex: 2;
@@ -91,7 +91,7 @@
   opacity: 0.7;
 }
 
-/* Filtro por marca - mais compacto e separado */
+
 .filtro-marca-container {
   position: relative;
   flex: 1;
@@ -265,7 +265,7 @@
   }
   
   .filtros-row {
-    gap: 1.2rem; /* MODIFICADO: aumentado de 0.8rem para 1.2rem */
+    gap: 1.2rem; 
   }
   
   .pesquisa-input {
@@ -288,7 +288,7 @@
 
   .filtros-row {
     flex-direction: column;
-    gap: 1rem; /* MODIFICADO: aumentado de 0.7rem para 1rem */
+    gap: 1rem; 
   }
 
   .pesquisa-input-container {
@@ -338,7 +338,6 @@
   }
 }
 
-/* Scrollbar personalizada */
 .marcas-dropdown::-webkit-scrollbar {
   width: 5px;
 }
