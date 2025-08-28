@@ -35,12 +35,12 @@ public class MotoristaServiceImpl implements MotoristaService {
     public MotoristaDTO cadastrarMotorista(MotoristaDTO motoristaDTO) {
         validarMotorista(motoristaDTO);
         
-        // Verificar se CPF já existe
+        
         if (motoristaRepository.existsByCpf(motoristaDTO.getCpf())) {
             throw new IllegalArgumentException("CPF já cadastrado!");
         }
 
-        // Verificar se CNH já existe
+        
         if (motoristaRepository.existsByCnh(motoristaDTO.getCnh())) {
             throw new IllegalArgumentException("CNH já cadastrada!");
         }
@@ -79,13 +79,13 @@ public class MotoristaServiceImpl implements MotoristaService {
         MotoristaEntity motoristaExistente = motoristaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Motorista não encontrado com o ID: " + id));
 
-        // Verificar se CPF já existe em outro motorista
+       
         if (!motoristaExistente.getCpf().equals(motoristaDTO.getCpf()) && 
             motoristaRepository.existsByCpf(motoristaDTO.getCpf())) {
             throw new IllegalArgumentException("CPF já cadastrado em outro motorista!");
         }
 
-        // Verificar se CNH já existe em outro motorista
+        
         if (!motoristaExistente.getCnh().equals(motoristaDTO.getCnh()) && 
             motoristaRepository.existsByCnh(motoristaDTO.getCnh())) {
             throw new IllegalArgumentException("CNH já cadastrada em outro motorista!");
@@ -98,7 +98,7 @@ public class MotoristaServiceImpl implements MotoristaService {
         motoristaExistente.setValidadeCnh(motoristaDTO.getValidadeCnh());
         motoristaExistente.setTelefone(motoristaDTO.getTelefone());
 
-        // Atualizar endereço
+        
         if (motoristaDTO.getEndereco() != null) {
             EnderecoEntity endereco = motoristaExistente.getEndereco();
             if (endereco == null) {
@@ -148,7 +148,7 @@ public class MotoristaServiceImpl implements MotoristaService {
             throw new IllegalArgumentException("Telefone inválido. Deve conter 10 ou 11 dígitos.");
         }
         
-        // Validar endereço
+        
         if (motoristaDTO.getEndereco() != null) {
             validarEndereco(motoristaDTO.getEndereco());
         }

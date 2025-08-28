@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,15 +81,13 @@ public class MotoristaServiceImplTest {
 
     @Test
     void testSalvarMotorista() {
-        // Arrange
+
         when(motoristaMapper.toEntity(any(MotoristaDTO.class))).thenReturn(motoristaEntity);
         when(motoristaRepository.save(any(MotoristaEntity.class))).thenReturn(motoristaEntity);
         when(motoristaMapper.toDTO(any(MotoristaEntity.class))).thenReturn(motoristaDTO);
 
-        // Act
         MotoristaDTO resultado = motoristaService.cadastrarMotorista(motoristaDTO);
 
-        // Assert
         assertNotNull(resultado);
         assertEquals(motoristaDTO.getId(), resultado.getId());
         assertEquals(motoristaDTO.getNome(), resultado.getNome());
@@ -98,6 +97,28 @@ public class MotoristaServiceImplTest {
         verify(motoristaRepository, times(1)).save(any(MotoristaEntity.class));
         verify(motoristaMapper, times(1)).toDTO(any(MotoristaEntity.class));
     }
+
+     @Test
+    void testBuscarMotoristaPorId() {
+      
+        Long id = 1L;
+        when(motoristaRepository.findById(id)).thenReturn(Optional.of(motoristaEntity));
+        when(motoristaMapper.toDTO(any(MotoristaEntity.class))).thenReturn(motoristaDTO);
+
+       
+        MotoristaDTO resultado = motoristaService.buscarMotoristaPorId(id);
+
+        
+        assertNotNull(resultado);
+        assertEquals(motoristaDTO.getId(), resultado.getId());
+        assertEquals(motoristaDTO.getNome(), resultado.getNome());
+        assertEquals(motoristaDTO.getCpf(), resultado.getCpf());
+        assertEquals(motoristaDTO.getCnh(), resultado.getCnh());
+        
+        verify(motoristaRepository, times(1)).findById(id);
+        verify(motoristaMapper, times(1)).toDTO(any(MotoristaEntity.class));
+    }
+
 
     
 }
