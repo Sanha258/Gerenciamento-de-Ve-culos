@@ -3,7 +3,6 @@ package locacao.veiculo.service.Impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -144,15 +143,13 @@ public class MotoristaServiceImplTest {
 
     @Test
     void testBuscarMotoristaPorCpf() {
-        // Arrange
+       
         String cpf = "12345678901";
         when(motoristaRepository.findByCpf(cpf)).thenReturn(Optional.of(motoristaEntity));
         when(motoristaMapper.toDTO(any(MotoristaEntity.class))).thenReturn(motoristaDTO);
-
-        // Act - Remove o Optional, pois retorna MotoristaDTO diretamente
+    
         MotoristaDTO resultado = motoristaService.buscarMotoristaPorCpf(cpf);
 
-        // Assert - Testa o objeto diretamente
         assertNotNull(resultado);
         assertEquals(motoristaDTO.getCpf(), resultado.getCpf());
         
@@ -343,6 +340,33 @@ public class MotoristaServiceImplTest {
         verify(motoristaRepository, never()).save(any(MotoristaEntity.class));
     }
 
-    
+    @Test
+    void testExcluirMotoristaPorId_Sucesso() {
+ 
+        Long id = 1L;
+        when(motoristaRepository.existsById(id)).thenReturn(true);
+
+        motoristaService.excluirMotorista(id);
+
+        verify(motoristaRepository, times(1)).existsById(id);
+        verify(motoristaRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    void testExcluirMotoristaPorId_MotoristaNaoEncontrado() {
+        // Arrange
+        Long id = 999L;
+        when(motoristaRepository.existsById(id)).thenReturn(false);
+
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, 
+            () -> motoristaService.excluirMotorista(id));
+        
+        assertEquals("Motorista não encontrado com o ID: " + id, exception.getMessage());
+        
+        verify(motoristaRepository, times(1)).existsById(id);
+        verify(motoristaRepository, never()).deleteById(any());
+    }
+        
     
 }
