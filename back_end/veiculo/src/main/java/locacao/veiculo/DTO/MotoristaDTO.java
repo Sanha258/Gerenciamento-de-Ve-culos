@@ -1,60 +1,31 @@
-package locacao.veiculo.Entity;
+package locacao.veiculo.DTO;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-
-@Entity
-@Table(name = "motorista")
-public class MotoristaEntity {
+public class MotoristaDTO {
     
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-
-    @Column(name = "sobrenome", nullable = false, length = 100)
     private String sobrenome;
-
-    @Column(name = "cpf", nullable = false, unique = true, length = 11)
     private String cpf;
-
-    @Column(name = "cnh", nullable = false, unique = true, length = 20)
     private String cnh;
-
-    @Column(name = "validade_cnh", nullable = false)
     private LocalDate validadeCnh;
-
-    @Column(name = "telefone", nullable = false, length = 15)
     private String telefone;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
-    private EnderecoEntity endereco;
-
-    public MotoristaEntity() {
+    private EnderecoDTO endereco;
+    
+    public MotoristaDTO() {
     }
 
-    public MotoristaEntity(String nome, String sobrenome, String cpf, String cnh, LocalDate validadeCnh,
-            String telefone) {
+    public MotoristaDTO(Long id, String nome, String sobrenome, String cpf, String cnh, LocalDate validadeCnh,
+            String telefone, EnderecoDTO endereco) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
         this.cnh = cnh;
         this.validadeCnh = validadeCnh;
         this.telefone = telefone;
-        
+        this.endereco = endereco;
     }
 
     public Long getId() {
@@ -113,14 +84,13 @@ public class MotoristaEntity {
         this.telefone = telefone;
     }
 
-    public EnderecoEntity getEndereco() {
+    public EnderecoDTO getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(EnderecoEntity endereco) {
+    public void setEndereco(EnderecoDTO endereco) {
         this.endereco = endereco;
     }
 
     
-
 }
