@@ -3,6 +3,7 @@ package locacao.veiculo.service.Impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -139,6 +140,24 @@ public class MotoristaServiceImplTest {
         
         verify(motoristaRepository, times(1)).findAll();
         verify(motoristaMapper, times(1)).toDTO(motoristaEntity);
+    }
+
+    @Test
+    void testBuscarMotoristaPorCpf() {
+        // Arrange
+        String cpf = "12345678901";
+        when(motoristaRepository.findByCpf(cpf)).thenReturn(Optional.of(motoristaEntity));
+        when(motoristaMapper.toDTO(any(MotoristaEntity.class))).thenReturn(motoristaDTO);
+
+        // Act - Remove o Optional, pois retorna MotoristaDTO diretamente
+        MotoristaDTO resultado = motoristaService.buscarMotoristaPorCpf(cpf);
+
+        // Assert - Testa o objeto diretamente
+        assertNotNull(resultado);
+        assertEquals(motoristaDTO.getCpf(), resultado.getCpf());
+        
+        verify(motoristaRepository, times(1)).findByCpf(cpf);
+        verify(motoristaMapper, times(1)).toDTO(any(MotoristaEntity.class));
     }
 
     @Test
