@@ -3,11 +3,14 @@ package locacao.veiculo.service.Impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -119,6 +122,23 @@ public class MotoristaServiceImplTest {
         verify(motoristaMapper, times(1)).toDTO(any(MotoristaEntity.class));
     }
 
+    @Test
+    void testBuscarTodosMotoristas() {
+   
+    List<MotoristaEntity> entities = Arrays.asList(motoristaEntity);
+    
+    when(motoristaRepository.findAll()).thenReturn(entities);
+    when(motoristaMapper.toDTO(motoristaEntity)).thenReturn(motoristaDTO);
+    
+    List<MotoristaDTO> resultado = motoristaService.listarTodosMotoristas();
+
+    assertNotNull(resultado);
+    assertEquals(1, resultado.size());
+    assertEquals(motoristaDTO.getId(), resultado.get(0).getId());
+    
+    verify(motoristaRepository, times(1)).findAll();
+    verify(motoristaMapper, times(1)).toDTO(motoristaEntity);
+}
 
     
 }
